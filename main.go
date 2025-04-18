@@ -6,7 +6,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"strconv"
@@ -93,7 +93,7 @@ func getForecast(lat, lon float64) (string, int, string, error) {
 	}
 	defer resp.Body.Close()
 
-	body, _ := ioutil.ReadAll(resp.Body)
+	body, _ := io.ReadAll(resp.Body)
 	var pr PointsResponse
 	if err := json.Unmarshal(body, &pr); err != nil {
 		return "", 0, "", err
@@ -109,7 +109,7 @@ func getForecast(lat, lon float64) (string, int, string, error) {
 	}
 	defer resp2.Body.Close()
 
-	body2, _ := ioutil.ReadAll(resp2.Body)
+	body2, _ := io.ReadAll(resp2.Body)
 	var fr ForecastResponse
 	if err := json.Unmarshal(body2, &fr); err != nil {
 		return "", 0, "", err
